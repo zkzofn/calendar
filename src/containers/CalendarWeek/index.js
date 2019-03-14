@@ -6,13 +6,13 @@ import { styles } from "./styles";
 import { withStyles } from "@material-ui/core/styles/index";
 // import { } from '../actions/RequestManager';
 
-import ControlDate from '../../components/ControlDate'
+
 
 class Template extends Component {
   render() {
     return (
       <div>
-        <ControlDate />
+        Template
       </div>
     )
   }

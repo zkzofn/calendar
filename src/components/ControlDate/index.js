@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { styles } from "./styles";
-import { withStyles } from "@material-ui/core/styles/index";
+import { styles } from './styles';
+import { withStyles } from '@material-ui/core/styles';
+import { ChevronLeft, ChevronRight } from '@material-ui/icons'
 // import { } from '../actions/RequestManager';
 
-import ControlDate from '../../components/ControlDate'
+
 
 class Template extends Component {
+  constructor(props) {
+    super(props)
+
+
+  }
+
   render() {
     return (
       <div>
-        <ControlDate />
+        <ChevronLeft />
+        <ChevronRight />
       </div>
     )
   }
