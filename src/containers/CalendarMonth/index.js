@@ -8,7 +8,7 @@ import { withStyles } from "@material-ui/core/styles/index";
 
 
 
-class Template extends Component {
+class CalendarMonth extends Component {
   render() {
     return (
       <div>
@@ -18,7 +18,7 @@ class Template extends Component {
   }
 }
 
-Template.propTypes = {
+CalendarMonth.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -38,4 +38,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Template));
+)(withStyles(styles)(CalendarMonth));

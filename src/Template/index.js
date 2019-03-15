@@ -10,6 +10,7 @@ import { withStyles } from "@material-ui/core/styles/index";
 
 class Template extends Component {
   render() {
+    const { classes } = this.props;
     return (
       <div>
         Template

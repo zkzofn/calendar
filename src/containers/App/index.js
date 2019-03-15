@@ -8,7 +8,7 @@ import { withStyles } from "@material-ui/core/styles/index";
 
 import Control from '../Control'
 
-class Template extends Component {
+class App extends Component {
   render() {
     return (
       <div>
@@ -18,24 +18,22 @@ class Template extends Component {
   }
 }
 
-Template.propTypes = {
+App.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 
 function mapStateToProps(state) {
   return {
-    // cohort: state.cohorts.single.article
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    // getCohort,
   }, dispatch);
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Template));
+)(withStyles(styles)(App));

@@ -10,7 +10,7 @@ import { getNow, setPrevControlMonth, setNextControlMonth } from '../../actions/
 
 
 
-class Template extends Component {
+class ControlDate extends Component {
   setPrevControlMonth() {
     this.props.setPrevControlMonth();
   }
@@ -24,11 +24,11 @@ class Template extends Component {
 
     return (
       <div>
-        <IconButton className={classes.button} aria-label="Delete" onClick={() => this.setPrevControlMonth()}>
+        <IconButton className={classes.button} aria-label="Delete" onClick={this.setPrevControlMonth.bind(this)}>
           <ChevronLeft />
         </IconButton>
         {`${this.props.date.controlYear} ${this.props.date.controlMonth}`}
-        <IconButton className={classes.button} aria-label="Delete" onClick={() => this.setNextControlMonth()}>
+        <IconButton className={classes.button} aria-label="Delete" onClick={this.setNextControlMonth.bind(this)}>
           <ChevronRight />
         </IconButton>
       </div>
@@ -36,7 +36,7 @@ class Template extends Component {
   }
 }
 
-Template.propTypes = {
+ControlDate.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -58,4 +58,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Template));
+)(withStyles(styles)(ControlDate));

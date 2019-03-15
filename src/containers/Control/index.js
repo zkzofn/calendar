@@ -5,21 +5,23 @@ import PropTypes from 'prop-types';
 import { styles } from "./styles";
 import { withStyles } from "@material-ui/core/styles/index";
 import ControlDate from '../../components/ControlDate'
+import ControlToggle from '../../components/ControlToggle'
 // import { } from '../actions/RequestManager';
 
 
 
-class Template extends Component {
+class Control extends Component {
   render() {
     return (
       <div>
         <ControlDate />
+        <ControlToggle />
       </div>
     )
   }
 }
 
-Template.propTypes = {
+Control.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -39,4 +41,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Template));
+)(withStyles(styles)(Control));
