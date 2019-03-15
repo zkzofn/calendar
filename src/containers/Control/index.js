@@ -4,10 +4,11 @@ import { bindActionCreators } from "redux";
 import PropTypes from 'prop-types';
 import { styles } from "./styles";
 import { withStyles } from "@material-ui/core/styles/index";
-import ControlDate from '../../components/ControlDate'
-import ControlToggle from '../../components/ControlToggle'
+import ControlDate from '../../components/ControlDate';
+import ControlToggle from '../../components/ControlToggle';
+import CalendarMonth from '../CalendarMonth';
+import CalendarWeek from '../CalendarWeek';
 // import { } from '../actions/RequestManager';
-
 
 
 class Control extends Component {
@@ -16,6 +17,7 @@ class Control extends Component {
       <div>
         <ControlDate />
         <ControlToggle />
+        {this.props.toggle.monthWeek ? <CalendarMonth /> : <CalendarWeek />}
       </div>
     )
   }
@@ -28,13 +30,12 @@ Control.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    // cohort: state.cohorts.single.article
+    toggle: state.toggle,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    // getCohort,
   }, dispatch);
 }
 
