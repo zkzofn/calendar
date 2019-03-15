@@ -5,22 +5,32 @@ import PropTypes from 'prop-types';
 import { styles } from './styles';
 import { withStyles } from '@material-ui/core/styles';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons'
-// import { } from '../actions/RequestManager';
+import { IconButton } from '@material-ui/core'
+import { getNow, setPrevControlMonth, setNextControlMonth } from '../../actions/RequestManager';
 
 
 
 class Template extends Component {
-  constructor(props) {
-    super(props)
+  setPrevControlMonth() {
+    this.props.setPrevControlMonth();
+  }
 
-
+  setNextControlMonth() {
+    this.props.setNextControlMonth();
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
       <div>
-        <ChevronLeft />
-        <ChevronRight />
+        <IconButton className={classes.button} aria-label="Delete" onClick={() => this.setPrevControlMonth()}>
+          <ChevronLeft />
+        </IconButton>
+        {`${this.props.date.controlYear} ${this.props.date.controlMonth}`}
+        <IconButton className={classes.button} aria-label="Delete" onClick={() => this.setNextControlMonth()}>
+          <ChevronRight />
+        </IconButton>
       </div>
     )
   }
@@ -33,13 +43,15 @@ Template.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    // cohort: state.cohorts.single.article
+    date: state.date
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    // getCohort,
+    getNow,
+    setPrevControlMonth,
+    setNextControlMonth
   }, dispatch);
 }
 

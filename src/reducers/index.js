@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import MenuReducer from './ReducerMenu';
+import DateReducer from './ReducerDate';
 
 const rootReducer = combineReducers({
-  menu: MenuReducer,
+  date: DateReducer,
 });
 
 export default rootReducer;
