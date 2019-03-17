@@ -5,8 +5,10 @@ export const styles = theme => ({
   },
   bullet: {
     display: 'inline-block',
-    margin: '0 2px',
-    // transform: 'scale(0.8)',
+    margin: '0 2px 0 8px',
+    transform: 'scale(2.5)',
+    color: '#039BE5',
+
   },
   title: {
     fontSize: 14,
@@ -14,4 +16,15 @@ export const styles = theme => ({
   pos: {
     marginBottom: 12,
   },
+  scheduleText: {
+    marginLeft: 5,
+  },
+  miniCard: {
+    textOverflow: 'clip',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.08)',
+    }
+  }
 });
