@@ -26,5 +26,8 @@ export const styles = theme => ({
     '&:hover': {
       backgroundColor: 'rgba(0, 0, 0, 0.08)',
     }
+  },
+  cardDate: {
+    textAlign: 'center',
   }
 });

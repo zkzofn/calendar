@@ -32,8 +32,8 @@ class MonthCard extends Component {
 
     return (
       <Card className={classes.card} onClick={this.onClickCard}>
-        {this.props.days ? <Typography>{this.props.days}</Typography> : null}
-        <Typography>{this.props.dateStr}</Typography>
+        {this.props.days ? <Typography className={classes.cardDate}>{this.props.days}</Typography> : null}
+        <Typography className={classes.cardDate}>{this.props.dateStr}</Typography>
         {todaySchedules.map((schedule, index) =>
           <Typography key={index} className={classes.miniCard}>
             {bull}
