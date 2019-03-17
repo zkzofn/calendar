@@ -11,6 +11,8 @@ export const CLOSE_DIALOG = 'CLOSE_DIALOG';
 export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE';
 export const SET_DIALOG_START_TIME = 'SET_DIALOG_START_TIME';
 export const SET_DIALOG_END_TIME = 'SET_DIALOG_END_TIME';
+export const SET_TITLE = 'SET_TITLE';
+export const DELETE_SCHEDULE = 'DELETE_SCHEDULE';
 
 export function getNow() {
   return {
@@ -37,16 +39,23 @@ export function toggleMonthWeek() {
   }
 }
 
-export function openDialog(startTime, endTime) {
+export function openDialog(startTime, endTime, title) {
   return {
     type: OPEN_DIALOG,
-    payload: { startTime, endTime},
+    payload: { startTime, endTime, title },
   }
 }
 
 export function closeDialog() {
   return {
     type: CLOSE_DIALOG,
+  }
+}
+
+export function setTitle(value) {
+  return {
+    type: SET_TITLE,
+    payload: value,
   }
 }
 
@@ -88,7 +97,6 @@ export function saveSchedule(title, startTime, endTime) {
 }
 
 export function checkSchedule(startTime, endTime) {
-  console.log(startTime, endTime);
   let data = JSON.parse(localStorage.getItem(DATATYPE.SCHEDULE));
 
   if (data === null) {
@@ -96,6 +104,22 @@ export function checkSchedule(startTime, endTime) {
   } else {
     return data.filter(schedule => !(new Date(schedule.startTime) >= endTime || new Date(schedule.endTime) <= startTime)).length === 0;
   }
+}
+
+export function deleteSchedule(originSchedule) {
+  let data = JSON.parse(localStorage.getItem(DATATYPE.SCHEDULE));
+
+
+  data = data.filter(schedule => {
+    return !(schedule.title === originSchedule.title && new Date(schedule.startTime).getTime() === new Date(originSchedule.startTime).getTime() && new Date(schedule.endTime).getTime() === new Date(originSchedule.endTime).getTime());
+  });
+  localStorage.setItem(DATATYPE.SCHEDULE, JSON.stringify(data));
+
+  return {
+    type: DELETE_SCHEDULE,
+    payload: data
+  }
+
 }
 
 export function convertTime(index) {

@@ -14,8 +14,6 @@ export const styles = theme => ({
   scheduleTime: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    // width: 110,
-
   },
   menu: {
     width: 300,
@@ -31,5 +29,8 @@ export const styles = theme => ({
     color: 'red',
     marginLeft: 24,
     marginTop: 10,
+  },
+  icon: {
+    marginBottom: 10
   }
 });

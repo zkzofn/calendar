@@ -1,6 +1,7 @@
 import {
   SAVE_SCHEDULE,
-} from '../actions/RequestManager';
+  DELETE_SCHEDULE,
+} from '../actions/RequestManager'
 
 import { DATATYPE } from '../actions/constants'
 
@@ -13,7 +14,8 @@ export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case SAVE_SCHEDULE:
       return { ...state, data: action.payload };
-
+    case DELETE_SCHEDULE:
+      return { ...state, data: action.payload };
     default:
       return state;
   }

@@ -5,11 +5,8 @@ import PropTypes from 'prop-types';
 import { styles } from "./styles";
 import { withStyles } from "@material-ui/core/styles/index";
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { convertTime } from '../../actions/RequestManager';
+import { convertTime, openDialog } from '../../actions/RequestManager';
 
 /**
  * props: {
@@ -18,26 +15,27 @@ import { convertTime } from '../../actions/RequestManager';
  * }
  */
 class MonthCard extends Component {
-  onClickCard(event) {
+  editSchedule = schedule => event => {
     event.stopPropagation();
-    console.log("card")
+    console.log(schedule);
+    this.props.openDialog(schedule.startTime, schedule.endTime, schedule.title)
   }
 
   render() {
     const { classes, year, month, date } = this.props;
     const bull = <span className={classes.bullet}>•</span>;
     const todaySchedules = this.props.schedules.filter(schedule => {
-      return new Date(schedule.startTime) >= new Date(year, month - 1, date) && new Date(schedule.endTime) < new Date(year, month - 1, date + 1)
+      return new Date(schedule.startTime) >= new Date(year, month - 1, date) && new Date(schedule.startTime) < new Date(year, month - 1, date + 1)
     }).sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
 
     return (
-      <Card className={classes.card} onClick={this.onClickCard}>
+      <Card className={classes.card}>
         {this.props.days ? <Typography className={classes.cardDate}>{this.props.days}</Typography> : null}
         <Typography className={classes.cardDate}>{this.props.dateStr}</Typography>
         {todaySchedules.map((schedule, index) =>
-          <Typography key={index} className={classes.miniCard}>
+          <Typography key={index} className={classes.miniCard} onClick={this.editSchedule(schedule)}>
             {bull}
-            <span className={classes.scheduleText}>{convertTime(new Date(schedule.startTime).getHours())} {schedule.title}</span>
+            <span className={classes.scheduleText}>{convertTime(new Date(schedule.startTime).getHours())} {schedule.title === "" ? "(제목 없음)" : schedule.title}</span>
           </Typography>
         )}
       </Card>
@@ -58,7 +56,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-
+    openDialog
   }, dispatch);
 }
 

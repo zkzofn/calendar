@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import PropTypes from 'prop-types';
-import { errorMessage } from '../../actions/constants'
-
-import { styles } from "./styles";
 import { withStyles } from "@material-ui/core/styles/index";
 import {
   Grid,
@@ -22,6 +19,8 @@ import { WatchLaterOutlined } from '@material-ui/icons'
 import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import moment from 'moment';
+import { errorMessage } from '../../actions/constants'
+import { styles } from "./styles";
 import {
   checkSchedule,
   saveSchedule,
@@ -29,6 +28,8 @@ import {
   setErrorMessage,
   setDialogStartTime,
   setDialogEndTime,
+  setTitle,
+  deleteSchedule,
 } from '../../actions/RequestManager'
 
 
@@ -39,14 +40,24 @@ class CustomDialog extends Component {
 
     this.state = {
       dialogOpen: false,
-      scheduleTitle: "",
     }
 
+    this.originSchedule = {};
     moment.locale("ko");
   }
 
-  handleScheduleTitle = (event) => {
-    this.setState({ scheduleTitle: event.target.value });
+  componentWillUpdate(nextProps) {
+    if (!this.props.dialog.open && nextProps.dialog.open) {
+      this.originSchedule = {
+        title: nextProps.dialog.title,
+        startTime: nextProps.dialog.startTime,
+        endTime: nextProps.dialog.endTime,
+      }
+    }
+  }
+
+  handleTitle = (event) => {
+    this.props.setTitle(event.target.value);
   }
 
   handleTitleKeyPress = event => {
@@ -93,9 +104,12 @@ class CustomDialog extends Component {
   }
 
   handleSave = () => {
-    console.log(checkSchedule(this.props.dialog.startTime, this.props.dialog.endTime));
-    if (checkSchedule(this.props.dialog.startTime, this.props.dialog.endTime)) {
-      this.props.saveSchedule(this.state.scheduleTitle === "" ? "(제목 없음)" : this.state.scheduleTitle, this.props.dialog.startTime, this.props.dialog.endTime);
+    const { title, startTime, endTime } = this.props.dialog;
+    
+    if (checkSchedule(startTime, endTime)) {
+      // this.originSchedule
+      
+      this.props.saveSchedule(title === "" || title === null ? "" : title, startTime, endTime);
       this.props.closeDialog();
       this.props.setErrorMessage(null);
     } else {
@@ -103,25 +117,29 @@ class CustomDialog extends Component {
     }
   }
 
+  deleteSchedule = () => {
+    this.props.deleteSchedule(this.originSchedule);
+    this.props.closeDialog();
+  }
+
+
   render() {
     const { classes } = this.props;
     const startTime = new Date(this.props.dialog.startTime);
     const endTime = new Date(this.props.dialog.endTime);
 
-    console.log(this.props.schedule)
     return (
       <Dialog
         open={this.props.dialog.open}
         onClose={this.props.closeDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
+        <DialogTitle>
           <Input
             className={classes.defaultMargin}
             placeholder="일정 제목"
+            defaultValue={this.props.dialog.title}
             fullWidth
-            onChange={this.handleScheduleTitle}
+            onChange={this.handleTitle}
             onKeyPress={this.handleTitleKeyPress}
           />
         </DialogTitle>
@@ -214,9 +232,10 @@ class CustomDialog extends Component {
           <Typography className={classes.errorMessage}>{this.props.dialog.errorMessage}</Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.props.closeDialog} color="primary">
+          <Button onClick={this.props.closeDialog}>
             취소
           </Button>
+          {this.originSchedule.title !== null ? <Button onClick={this.deleteSchedule} color="secondary">삭제</Button> : null}
           <Button
             onClick={this.handleSave}
             color="primary"
@@ -249,6 +268,8 @@ function mapDispatchToProps(dispatch) {
     setErrorMessage,
     setDialogStartTime,
     setDialogEndTime,
+    setTitle,
+    deleteSchedule,
   }, dispatch);
 }
 

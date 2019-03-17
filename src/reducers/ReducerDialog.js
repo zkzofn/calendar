@@ -4,6 +4,7 @@ import {
   SET_DIALOG_START_TIME,
   SET_DIALOG_END_TIME,
   SET_ERROR_MESSAGE,
+  SET_TITLE,
 } from '../actions/RequestManager';
 
 const INITIAL_STATE = {
@@ -11,6 +12,7 @@ const INITIAL_STATE = {
   startTime: new Date(),
   endTime: new Date(),
   errorMessage: null,
+  title: null,
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -22,10 +24,14 @@ export default function (state = INITIAL_STATE, action) {
         startTime: action.payload.startTime,
         endTime: action.payload.endTime,
         errorMessage: null,
+        title: action.payload.title,
       };
 
     case CLOSE_DIALOG:
       return { ...state, open: false };
+
+    case SET_TITLE:
+      return { ...state, title: action.payload }
 
     case SET_ERROR_MESSAGE:
       return { ...state, errorMessage: action.payload }

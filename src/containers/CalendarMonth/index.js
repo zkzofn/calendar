@@ -14,13 +14,13 @@ import MonthCard from '../../components/MonthCard'
 import { openDialog } from '../../actions/RequestManager'
 
 class CalendarMonth extends Component {
-  onClickTile(startYear, startMonth, startDate, that, timeDiff = 1) {
-    // 현재 시간 기준으로 1시간 짜리 일정을 셋팅해서 dialog 를 띄운다.
+  handleTile(startYear, startMonth, startDate, that, timeDiff = 1) {
+    // 현재 시간 기준으로 1시간(timeDiff) 짜리 일정을 셋팅해서 dialog 를 띄운다.
     const now = new Date();
-    const startTime = new Date(startYear, startMonth - 1, startDate, now.getHours() + 1);
-    const endTime = new Date(startYear, startMonth - 1, startDate, now.getHours() + 1 + timeDiff);
+    const startTime = new Date(startYear, startMonth - 1, now.getHours() === 23 ? startDate - 1 : startDate, now.getHours() + 1);
+    const endTime = new Date(startYear, startMonth - 1, now.getHours() === 23 ? startDate - 1 : startDate, now.getHours() + 1 + timeDiff);
 
-    this.props.openDialog(startTime, endTime);
+    this.props.openDialog(startTime, endTime, null);
   }
 
   render() {
@@ -51,7 +51,7 @@ class CalendarMonth extends Component {
                   index < 7 ? classes.gridTileTop : null,
                   index % 7 === 0 ? classes.gridTileLeft : null,
                 )}
-                onClick={this.onClickTile.bind(this, year, month, date)}
+                onClick={this.handleTile.bind(this, year, month, date)}
               >
                 <MonthCard
                   days={index < 7 ? days[index] : null}
