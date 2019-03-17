@@ -4,6 +4,8 @@ import { bindActionCreators } from "redux";
 import PropTypes from 'prop-types';
 import { styles } from "./styles";
 import { withStyles } from "@material-ui/core/styles/index";
+import CalendarMonth from '../CalendarMonth';
+import CalendarWeek from '../CalendarWeek';
 // import { } from '../actions/RequestManager';
 
 import Control from '../Control'
@@ -13,6 +15,7 @@ class App extends Component {
     return (
       <div>
         <Control />
+        {this.props.toggle.monthWeek ? <CalendarMonth /> : <CalendarWeek />}
       </div>
     )
   }
@@ -25,6 +28,7 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    toggle: state.toggle,
   };
 }
 

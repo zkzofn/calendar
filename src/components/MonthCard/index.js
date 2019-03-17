@@ -17,7 +17,6 @@ import { convertTime, openDialog } from '../../actions/RequestManager';
 class MonthCard extends Component {
   editSchedule = schedule => event => {
     event.stopPropagation();
-    console.log(schedule);
     this.props.openDialog(schedule.startTime, schedule.endTime, schedule.title)
   }
 

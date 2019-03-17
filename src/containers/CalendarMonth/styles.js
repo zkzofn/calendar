@@ -1,4 +1,5 @@
-const border = '#dadce0 1px solid';
+import { border } from '../../actions/common'
+
 
 export const styles = theme => ({
   root: {
@@ -9,8 +10,8 @@ export const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   gridList: {
-    width: 1000,
-    height: 800,
+    width: 1100,
+    height: window.innerHeight - 64,
   },
   gridTile: {
     borderRight: border,

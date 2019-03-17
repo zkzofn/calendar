@@ -23,7 +23,7 @@ class ControlDate extends Component {
     const { classes } = this.props;
 
     return (
-      <div>
+      <div className={classes.root}>
         <IconButton className={classes.button} aria-label="Delete" onClick={this.setPrevControlMonth.bind(this)}>
           <ChevronLeft />
         </IconButton>

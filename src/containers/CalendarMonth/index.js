@@ -33,10 +33,16 @@ class CalendarMonth extends Component {
     const dateCount = (lastDate - firstDate)/1000/60/60/24 + 1;
     const days = ['일', '월', '화', '수', '목', '금', '토'];
 
+    console.log(window.innerHeight - 64);
+    console.log(dateCount / 7);
 
     return (
       <div className={classes.root}>
-        <GridList cellHeight={100} className={classes.gridList} cols={7}>
+        <GridList
+          cellHeight={parseInt((window.innerHeight - 64) / (dateCount / 7) - 4)}
+          className={classes.gridList}
+          cols={7}
+        >
           {Array(dateCount).fill(1).map((stuff, index) => {
             const fullDate = new Date(controlYear, controlMonth - 1, 1 - firstDay + index);
             const year = fullDate.getFullYear();

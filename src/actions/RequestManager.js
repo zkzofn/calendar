@@ -96,13 +96,21 @@ export function saveSchedule(title, startTime, endTime) {
   }
 }
 
-export function checkSchedule(startTime, endTime) {
+export function checkSchedule(startTime, endTime, originSchedule) {
   let data = JSON.parse(localStorage.getItem(DATATYPE.SCHEDULE));
 
   if (data === null) {
     return true;
   } else {
-    return data.filter(schedule => !(new Date(schedule.startTime) >= endTime || new Date(schedule.endTime) <= startTime)).length === 0;
+    if (originSchedule.title !== null) {
+      data = data.filter(schedule => {
+        return !(schedule.title === originSchedule.title && new Date(schedule.startTime).getTime() === new Date(originSchedule.startTime).getTime() && new Date(schedule.endTime).getTime() === new Date(originSchedule.endTime).getTime());
+      })
+    }
+
+    return data.filter(schedule => {
+      return !(new Date(schedule.startTime) >= endTime || new Date(schedule.endTime) <= startTime)
+    }).length === 0;
   }
 }
 

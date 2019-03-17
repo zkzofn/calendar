@@ -84,31 +84,45 @@ class CustomDialog extends Component {
   }
 
   handleStartTimeChange = (that, selectedTime) => {
-    const time = selectedTime.key;
+    const time = selectedTime.props.value;
+    const startTime = new Date(this.props.dialog.startTime);
+    const year = startTime.getFullYear();
+    const month = startTime.getMonth();
+    const date = startTime.getDate();
 
-    this.props.setDialogStartTime(new Date(this.props.dialog.startTime.setHours(time)));
-    this.props.setDialogEndTime(new Date(new Date(this.props.dialog.startTime).setHours(this.props.dialog.startTime.getHours() + 1)));
+    this.props.setDialogStartTime(new Date(year, month, date, time));
+    this.props.setDialogEndTime(new Date(year, month, date, time + 1));
   }
 
   handleEndTimeChange = (that, selectedTime) => {
-    const time = selectedTime.key;
-    const endTime = new Date(this.props.dialog.endTime.setHours(time));
+    const time = selectedTime.props.value;
+    const startTime = new Date(this.props.dialog.startTime);
+    const startYear = startTime.getFullYear();
+    const startMonth = startTime.getMonth();
+    const startDate = startTime.getDate();
+    const startHour = startTime.getHours();
+    const endTime = new Date(this.props.dialog.endTime);
+    const endYear = endTime.getFullYear();
+    const endMonth = endTime.getMonth();
+    const endDate = endTime.getDate();
+    const newEndTime = new Date(endYear, endMonth, endDate, time);
 
-    if (this.props.dialog.startTime < endTime) {
+    if (startTime < newEndTime) {
       this.props.setErrorMessage(null);
-      this.props.setDialogEndTime(endTime);
+      this.props.setDialogEndTime(newEndTime);
     } else {
       this.props.setErrorMessage(errorMessage.endDateCantPrevStartDate);
-      this.props.setDialogEndTime(new Date(new Date(this.props.dialog.startTime).setHours(this.props.dialog.startTime.getHours() + 1)));
+      this.props.setDialogEndTime(new Date(startYear, startMonth, startDate, startHour + 1));
     }
   }
 
   handleSave = () => {
     const { title, startTime, endTime } = this.props.dialog;
     
-    if (checkSchedule(startTime, endTime)) {
-      // this.originSchedule
-      
+    if (checkSchedule(startTime, endTime, this.originSchedule)) {
+      if (this.originSchedule.title !== null) {
+        this.props.deleteSchedule(this.originSchedule);
+      }
       this.props.saveSchedule(title === "" || title === null ? "" : title, startTime, endTime);
       this.props.closeDialog();
       this.props.setErrorMessage(null);

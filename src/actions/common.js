@@ -1,0 +1,1 @@
+export const border = '#dadce0 1px solid';

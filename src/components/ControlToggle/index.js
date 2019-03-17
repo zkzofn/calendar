@@ -15,7 +15,7 @@ class ControlToggle extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
+      <div className={classes.root}>
         <Button
           variant={this.props.toggle.monthWeek ? "contained" : "text"}
           size="small"
