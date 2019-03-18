@@ -9,9 +9,19 @@ import {
   GridList,
   GridListTile,
 } from '@material-ui/core';
+import {
+  openDialog,
+  openAlert,
+  closeAlert,
+  setALertErrorMessage,
+  checkSchedule,
+  deleteSchedule,
+  saveSchedule,
+} from '../../actions/RequestManager'
+import { errorMessage } from '../../actions/constants'
 import CustomDialog from '../../components/CustomDialog';
 import MonthCard from '../../components/MonthCard'
-import { openDialog } from '../../actions/RequestManager'
+import Alert from '../../components/Alert';
 
 class CalendarMonth extends Component {
   handleTile(startYear, startMonth, startDate, that, timeDiff = 1) {
@@ -23,6 +33,40 @@ class CalendarMonth extends Component {
     this.props.openDialog(startTime, endTime, null);
   }
 
+  onDragOver = event => {
+    event.preventDefault();
+  }
+
+  onDrop = (event, targetTime) => {
+    const originSchedule = JSON.parse(event.dataTransfer.getData("schedule"));
+    const originStartTime = new Date(originSchedule.startTime);
+    const originEndTime = new Date(originSchedule.endTime);
+    const diffHours = (originEndTime - originStartTime) / 1000 / 60 / 60;
+    const targetYear = targetTime.getFullYear();
+    const targetMonth = targetTime.getMonth();
+    const targetDate = targetTime.getDate();
+    const originStartHours = originStartTime.getHours();
+    const startTime = new Date(targetYear, targetMonth, targetDate, originStartHours);
+    const endTime = new Date(targetYear, targetMonth, targetDate, originStartHours + diffHours);
+
+    /**
+     * 1. 기존의 일정과 겹치는게 있는지 확인한다
+     * 2. 없으면 저장
+     *  2-1. startDate: targetDate(년월일) + originStartTime(hour)
+     *  2-2. endDate: targetDate(년월일) + originStartTime(hour) + diffHours
+     * 3. 있으면 경고 얼럿 --> 해당 dialog 는 별도 component 로 만들어라
+     * 4. 없으며 저장
+     */
+    if (checkSchedule(startTime, endTime, originSchedule)) {
+      this.props.deleteSchedule(originSchedule);
+      this.props.saveSchedule(originSchedule.title, startTime, endTime);
+      this.props.closeAlert();
+    } else {
+      this.props.setALertErrorMessage(errorMessage.duplicatedSchedule);
+      this.props.openAlert();
+    }
+  }
+
   render() {
     const { classes } = this.props;
     const { controlYear, controlMonth } = this.props.date;
@@ -32,9 +76,6 @@ class CalendarMonth extends Component {
     const lastDate = new Date(controlYear, controlMonth, lastDay);
     const dateCount = (lastDate - firstDate)/1000/60/60/24 + 1;
     const days = ['일', '월', '화', '수', '목', '금', '토'];
-
-    console.log(window.innerHeight - 64);
-    console.log(dateCount / 7);
 
     return (
       <div className={classes.root}>
@@ -58,6 +99,8 @@ class CalendarMonth extends Component {
                   index % 7 === 0 ? classes.gridTileLeft : null,
                 )}
                 onClick={this.handleTile.bind(this, year, month, date)}
+                onDragOver={event => this.onDragOver(event)}
+                onDrop={event => this.onDrop(event, fullDate)}
               >
                 <MonthCard
                   days={index < 7 ? days[index] : null}
@@ -71,6 +114,7 @@ class CalendarMonth extends Component {
           })}
         </GridList>
         <CustomDialog />
+        <Alert />
       </div>
     )
   }
@@ -90,6 +134,11 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     openDialog,
+    openAlert,
+    closeAlert,
+    setALertErrorMessage,
+    deleteSchedule,
+    saveSchedule,
   }, dispatch);
 }
 

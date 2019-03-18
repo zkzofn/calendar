@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import { styles } from "./styles";
 import { withStyles } from "@material-ui/core/styles/index";
 import Button from '@material-ui/core/Button';
-import { toggleMonthWeek } from '../../actions/RequestManager';
+import { selectMonthWeek } from '../../actions/RequestManager';
 
 class ControlToggle extends Component {
-  toggleMonthWeek() {
-    this.props.toggleMonthWeek();
+  handleMonthWeek(selectMonth) {
+    this.props.selectMonthWeek(selectMonth);
   }
 
   render() {
@@ -21,7 +21,7 @@ class ControlToggle extends Component {
           size="small"
           color="primary"
           className=""
-          onClick={this.props.toggleMonthWeek.bind(this)}
+          onClick={this.handleMonthWeek.bind(this, true)}
         >
           월
         </Button>
@@ -30,7 +30,7 @@ class ControlToggle extends Component {
           size="small"
           color="primary"
           className=""
-          onClick={this.props.toggleMonthWeek.bind(this)}
+          onClick={this.handleMonthWeek.bind(this, false)}
         >
           주
         </Button>
@@ -52,7 +52,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    toggleMonthWeek,
+    selectMonthWeek,
   }, dispatch);
 }
 

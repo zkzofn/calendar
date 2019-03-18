@@ -20,6 +20,10 @@ class MonthCard extends Component {
     this.props.openDialog(schedule.startTime, schedule.endTime, schedule.title)
   }
 
+  onDragStart = (event, schedule) => {
+    event.dataTransfer.setData("schedule", JSON.stringify(schedule));
+  }
+
   render() {
     const { classes, year, month, date } = this.props;
     const bull = <span className={classes.bullet}>•</span>;
@@ -28,11 +32,20 @@ class MonthCard extends Component {
     }).sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
 
     return (
-      <Card className={classes.card}>
+      <Card
+        className={classes.card}
+
+      >
         {this.props.days ? <Typography className={classes.cardDate}>{this.props.days}</Typography> : null}
         <Typography className={classes.cardDate}>{this.props.dateStr}</Typography>
         {todaySchedules.map((schedule, index) =>
-          <Typography key={index} className={classes.miniCard} onClick={this.editSchedule(schedule)}>
+          <Typography
+            key={index}
+            className={classes.miniCard}
+            onClick={this.editSchedule(schedule)}
+            draggable
+            onDragStart={event => this.onDragStart(event, schedule)}
+          >
             {bull}
             <span className={classes.scheduleText}>{convertTime(new Date(schedule.startTime).getHours())} {schedule.title === "" ? "(제목 없음)" : schedule.title}</span>
           </Typography>

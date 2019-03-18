@@ -28,7 +28,7 @@ export default function (state = INITIAL_STATE, action) {
       };
 
     case CLOSE_DIALOG:
-      return { ...state, open: false };
+      return { ...state, open: false, errorMessage: null };
 
     case SET_TITLE:
       return { ...state, title: action.payload }

@@ -1,4 +1,4 @@
-import { TOGGLE_MONTH_WEEK } from '../actions/RequestManager';
+import { SELECT_MONTH_WEEK } from '../actions/RequestManager';
 
 const INITIAL_STATE = {
   monthWeek: true
@@ -6,8 +6,8 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
-    case TOGGLE_MONTH_WEEK:
-      return { ...state, monthWeek: !state.monthWeek };
+    case SELECT_MONTH_WEEK:
+      return { ...state, monthWeek: action.payload };
 
     default:
       return state;

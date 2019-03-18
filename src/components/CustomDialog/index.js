@@ -75,8 +75,16 @@ class CustomDialog extends Component {
   }
 
   handleEndDateChange = date => {
-    if (moment(date)._d < this.props.dialog.startTime) {
+    const startTime = new Date(this.props.dialog.startTime);
+    const newEndTime = new Date(moment(date)._d).getTime();
+    const startYear = startTime.getFullYear();
+    const startMonth = startTime.getMonth();
+    const startDate = startTime.getDate();
+    const startHour = startTime.getHours();
+
+    if (newEndTime < startTime) {
       this.props.setErrorMessage(errorMessage.endDateCantPrevStartDate);
+      this.props.setDialogEndTime(new Date(startYear, startMonth, startDate, startHour + 1));
     } else {
       this.props.setErrorMessage(null);
       this.props.setDialogEndTime(moment(date)._d);
@@ -125,7 +133,6 @@ class CustomDialog extends Component {
       }
       this.props.saveSchedule(title === "" || title === null ? "" : title, startTime, endTime);
       this.props.closeDialog();
-      this.props.setErrorMessage(null);
     } else {
       this.props.setErrorMessage(errorMessage.duplicatedSchedule);
     }

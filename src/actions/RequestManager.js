@@ -3,7 +3,7 @@ import { DATATYPE } from './constants';
 export const GET_NOW = 'GET_NOW';
 export const SET_PREV_CONTROL_MONTH = 'SET_PREV_CONTROL_MONTH';
 export const SET_NEXT_CONTROL_MONTH = 'SET_NEXT_CONTROL_MONTH';
-export const TOGGLE_MONTH_WEEK = 'TOGGLE_MONTH_WEEK';
+export const SELECT_MONTH_WEEK = 'TOGGLE_MONTH_WEEK';
 export const SAVE_SCHEDULE = 'SAVE_SCHEDULE';
 export const CHECK_SCHEDULE = 'CHECK_SCHEDULE';
 export const OPEN_DIALOG = 'OPEN_DIALOG';
@@ -13,6 +13,9 @@ export const SET_DIALOG_START_TIME = 'SET_DIALOG_START_TIME';
 export const SET_DIALOG_END_TIME = 'SET_DIALOG_END_TIME';
 export const SET_TITLE = 'SET_TITLE';
 export const DELETE_SCHEDULE = 'DELETE_SCHEDULE';
+export const OPEN_ALERT = 'OPEN_ALERT';
+export const CLOSE_ALERT = 'CLOSE_ALERT';
+export const SET_ALERT_ERROR_MESSAGE = 'SET_ALERT_ERROR_MESSAGE';
 
 export function getNow() {
   return {
@@ -33,9 +36,10 @@ export function setNextControlMonth() {
   }
 }
 
-export function toggleMonthWeek() {
+export function selectMonthWeek(monthBool) {
   return {
-    type: TOGGLE_MONTH_WEEK,
+    type: SELECT_MONTH_WEEK,
+    payload: monthBool
   }
 }
 
@@ -96,6 +100,9 @@ export function saveSchedule(title, startTime, endTime) {
   }
 }
 
+/**
+ * originSchedule: 수정인지 신규 등록인지 구분에 쓰임
+ */
 export function checkSchedule(startTime, endTime, originSchedule) {
   let data = JSON.parse(localStorage.getItem(DATATYPE.SCHEDULE));
 
@@ -137,3 +144,22 @@ export function convertTime(index) {
   return `${divider} ${time}시`;
 }
 
+
+export function openAlert() {
+  return {
+    type: OPEN_ALERT
+  }
+}
+
+export function closeAlert() {
+  return {
+    type: CLOSE_ALERT
+  }
+}
+
+export function setALertErrorMessage(errorMessage) {
+  return {
+    type: SET_ALERT_ERROR_MESSAGE,
+    payload: errorMessage
+  }
+}
