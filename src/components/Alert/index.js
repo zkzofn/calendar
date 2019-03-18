@@ -15,8 +15,6 @@ class Alert extends Component {
   }
 
   render() {
-    const { classes } = this.props;
-    console.log(this.props.alert);
     return (
       <div>
         <Dialog

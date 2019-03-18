@@ -25,9 +25,14 @@ export const styles = theme => ({
     overflow: 'hidden',
     '&:hover': {
       backgroundColor: 'rgba(0, 0, 0, 0.08)',
+      cursor: 'pointer',
     }
   },
   cardDate: {
     textAlign: 'center',
+  },
+  cardDateToday: {
+    backgroundColor: '#039BE5',
+    color: 'white',
   }
 });

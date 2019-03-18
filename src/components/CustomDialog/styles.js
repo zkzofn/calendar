@@ -1,5 +1,3 @@
-const border = '#dadce0 1px solid';
-
 export const styles = theme => ({
   defaultMargin: {
     margin: theme.spacing.unit,

@@ -2,6 +2,8 @@ import {
   GET_NOW,
   SET_PREV_CONTROL_MONTH,
   SET_NEXT_CONTROL_MONTH,
+  SET_PREV_CONTROL_WEEK,
+  SET_NEXT_CONTROL_WEE,
 } from '../actions/RequestManager';
 
 const now = new Date();
@@ -10,7 +12,9 @@ const INITIAL_STATE = {
   now: now,
   controlYear: now.getFullYear(),
   controlMonth: now.getMonth() + 1,
-  monthChangeValue: now.getMonth(),
+  controlDate: now.getDate(),
+  diffMonth: now.getMonth(),
+  diffWeek: 0,
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -21,17 +25,17 @@ export default function (state = INITIAL_STATE, action) {
     case SET_PREV_CONTROL_MONTH:
       return {
         ...state,
-        monthChangeValue: state.monthChangeValue - 1,
-        controlYear: new Date((new Date()).setMonth(state.monthChangeValue - 1)).getFullYear(),
-        controlMonth: new Date((new Date()).setMonth(state.monthChangeValue - 1)).getMonth() + 1,
+        diffMonth: state.diffMonth - 1,
+        controlYear: new Date((new Date()).setMonth(state.diffMonth - 1)).getFullYear(),
+        controlMonth: new Date((new Date()).setMonth(state.diffMonth - 1)).getMonth() + 1,
       };
 
     case SET_NEXT_CONTROL_MONTH:
       return {
         ...state,
-        monthChangeValue: state.monthChangeValue + 1,
-        controlYear: new Date((new Date()).setMonth(state.monthChangeValue + 1)).getFullYear(),
-        controlMonth: new Date((new Date()).setMonth(state.monthChangeValue + 1)).getMonth() + 1,
+        diffMonth: state.diffMonth + 1,
+        controlYear: new Date((new Date()).setMonth(state.diffMonth + 1)).getFullYear(),
+        controlMonth: new Date((new Date()).setMonth(state.diffMonth + 1)).getMonth() + 1,
       };
 
     default:

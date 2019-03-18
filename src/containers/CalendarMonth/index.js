@@ -99,7 +99,7 @@ class CalendarMonth extends Component {
                   index % 7 === 0 ? classes.gridTileLeft : null,
                 )}
                 onClick={this.handleTile.bind(this, year, month, date)}
-                onDragOver={event => this.onDragOver(event)}
+                onDragOver={this.onDragOver}
                 onDrop={event => this.onDrop(event, fullDate)}
               >
                 <MonthCard

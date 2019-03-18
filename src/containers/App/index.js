@@ -6,7 +6,6 @@ import { styles } from "./styles";
 import { withStyles } from "@material-ui/core/styles/index";
 import CalendarMonth from '../CalendarMonth';
 import CalendarWeek from '../CalendarWeek';
-// import { } from '../actions/RequestManager';
 
 import Control from '../Control'
 
