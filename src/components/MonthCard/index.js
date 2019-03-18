@@ -32,10 +32,7 @@ class MonthCard extends Component {
     }).sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
 
     return (
-      <Card
-        className={classes.card}
-
-      >
+      <Card className={classes.card}>
         {this.props.days ? <Typography className={classes.cardDate}>{this.props.days}</Typography> : null}
         <Typography className={classes.cardDate}>{this.props.dateStr}</Typography>
         {todaySchedules.map((schedule, index) =>

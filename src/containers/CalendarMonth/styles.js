@@ -10,6 +10,7 @@ export const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   gridList: {
+    flexGrow: 1,
     width: 1100,
     height: window.innerHeight - 64,
   },
