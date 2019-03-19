@@ -31,6 +31,14 @@ export const styles = theme => ({
     textAlign: 'center',
   },
   divider: {
-    float: 'right'
+    float: 'right',
+  },
+  gridTarget: {
+    backgroundColor: '#039BE5',
+    borderBottom: 'none'
+  },
+  targetText: {
+    color: 'white',
+    marginLeft: 6,
   }
 });

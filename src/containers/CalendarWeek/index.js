@@ -68,7 +68,6 @@ class CalendarWeek extends Component {
                 />
               )
             }
-
           })}
         </GridList>
         <GridList
@@ -77,7 +76,20 @@ class CalendarWeek extends Component {
           cellHeight={48}
         >
           {Array(8*24).fill(1).map((stuff, index) => {
+            const weekIndex = index % 8;
+            const hours = parseInt(index / 8);
+            const dateMilli = firstDate.getTime() + 1000 * 60 * 60 * 24 * (weekIndex - 1) + 1000 * 60 * 60 * hours;
+            const date = new Date(dateMilli);
+
             if (index % 8 !== 0) {
+              const targetScheduleList = this.props.schedules.filter(schedule => {
+                return date.getTime() >= new Date(schedule.startTime).getTime()  && date.getTime() < new Date(schedule.endTime).getTime();
+              });
+              const targetSchedule = targetScheduleList.length >= 0 ? targetScheduleList[0] : null;
+              const targetTitle = targetSchedule ? targetSchedule.title : null;
+              const targetStartTime =  targetSchedule ? new Date(targetSchedule.startTime) : null;
+              const targetEndTime = targetSchedule ? new Date(targetSchedule.endTime) : null;
+
               return (
                 <GridListTile
                   key={index}
@@ -85,9 +97,12 @@ class CalendarWeek extends Component {
                     classes.gridTile,
                     index < 8 ? classes.gridTileTop : null,
                     index % 8 === 0 ? classes.gridTileLeft : null,
+                    targetSchedule ? classes.gridTarget : null,
+
                   )}
                 >
-                  <Typography>{''}</Typography>
+                  {targetSchedule && targetStartTime.getTime() === date.getTime() ? <Typography className={classes.targetText}>{`${targetTitle === '' ? '(제목없음)' : targetTitle}`}</Typography> : null}
+                  {targetSchedule && targetStartTime.getTime() === date.getTime() ? <Typography className={classes.targetText}>{`${targetStartTime.getHours()}시~ ${targetEndTime.getHours()}시`}</Typography> : null}
                 </GridListTile>
               )
             } else {
@@ -101,11 +116,8 @@ class CalendarWeek extends Component {
                 </GridListTile>
               )
             }
-
           })}
-
         </GridList>
-
       </div>
     )
   }
@@ -119,6 +131,7 @@ CalendarWeek.propTypes = {
 function mapStateToProps(state) {
   return {
     date: state.date,
+    schedules: state.schedule.data,
   };
 }
 
