@@ -26,6 +26,38 @@ import Alert from '../../components/Alert';
 
 
 class CalendarWeek extends Component {
+  onDragStart = (event, schedule, id) => {
+    event.dataTransfer.setData('schedule', JSON.stringify(schedule));
+  }
+
+  onDragOver = event => {
+    event.preventDefault();
+  }
+
+  onDrop = (event, targetTime) => {
+    const originSchedule = JSON.parse(event.dataTransfer.getData("schedule"));
+    const originStartTime = new Date(originSchedule.startTime);
+    const originEndTime = new Date(originSchedule.endTime);
+    const diffHours = (originEndTime - originStartTime) / 1000 / 60 / 60;
+    const targetYear = targetTime.getFullYear();
+    const targetMonth = targetTime.getMonth();
+    const targetDate = targetTime.getDate();
+    const targetStartHours = targetTime.getHours();
+    const startTime = new Date(targetYear, targetMonth, targetDate, targetStartHours);
+    const endTime = new Date(targetYear, targetMonth, targetDate, targetStartHours + diffHours);
+
+    if (checkSchedule(startTime, endTime, originSchedule)) {
+      console.log(true)
+      this.props.deleteSchedule(originSchedule);
+      this.props.saveSchedule(originSchedule.title, startTime, endTime);
+      this.props.closeAlert();
+    } else {
+      console.log(false);
+      this.props.setALertErrorMessage(errorMessage.duplicatedSchedule);
+      this.props.openAlert();
+    }
+  }
+
   render() {
     const { classes } = this.props;
     const { controlYear, controlMonth, controlDate } = this.props.date;
@@ -98,8 +130,11 @@ class CalendarWeek extends Component {
                     index < 8 ? classes.gridTileTop : null,
                     index % 8 === 0 ? classes.gridTileLeft : null,
                     targetSchedule ? classes.gridTarget : null,
-
                   )}
+                  draggable
+                  onDragStart={event => this.onDragStart(event, targetSchedule)}
+                  onDragOver={this.onDragOver}
+                  onDrop={event => this.onDrop(event, date)}
                 >
                   {targetSchedule && targetStartTime.getTime() === date.getTime() ? <Typography className={classes.targetText}>{`${targetTitle === '' ? '(제목없음)' : targetTitle}`}</Typography> : null}
                   {targetSchedule && targetStartTime.getTime() === date.getTime() ? <Typography className={classes.targetText}>{`${targetStartTime.getHours()}시~ ${targetEndTime.getHours()}시`}</Typography> : null}

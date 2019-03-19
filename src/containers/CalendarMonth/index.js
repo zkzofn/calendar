@@ -49,14 +49,6 @@ class CalendarMonth extends Component {
     const startTime = new Date(targetYear, targetMonth, targetDate, originStartHours);
     const endTime = new Date(targetYear, targetMonth, targetDate, originStartHours + diffHours);
 
-    /**
-     * 1. 기존의 일정과 겹치는게 있는지 확인한다
-     * 2. 없으면 저장
-     *  2-1. startDate: targetDate(년월일) + originStartTime(hour)
-     *  2-2. endDate: targetDate(년월일) + originStartTime(hour) + diffHours
-     * 3. 있으면 경고 얼럿 --> 해당 dialog 는 별도 component 로 만들어라
-     * 4. 없으며 저장
-     */
     if (checkSchedule(startTime, endTime, originSchedule)) {
       this.props.deleteSchedule(originSchedule);
       this.props.saveSchedule(originSchedule.title, startTime, endTime);
