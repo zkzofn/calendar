@@ -56,18 +56,18 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         diffWeek: state.diffWeek - 1,
-        controlYear: new Date((new Date()).setDate(state.controlDate + (state.diffWeek - 1) * 7)).getFullYear(),
-        controlMonth: new Date((new Date()).setDate(state.controlDate + (state.diffWeek - 1) * 7)).getMonth() + 1,
-        controlDate: new Date((new Date()).setDate(state.controlDate + (state.diffWeek - 1) * 7)).getDate(),
+        controlYear: new Date(new Date().getTime() + (state.diffWeek - 1) * 7 * 24 * 60 * 60 * 1000).getFullYear(),
+        controlMonth: new Date(new Date().getTime() + (state.diffWeek - 1) * 7 * 24 * 60 * 60 * 1000).getMonth()+ 1,
+        controlDate: new Date(new Date().getTime() + (state.diffWeek - 1) * 7 * 24 * 60 * 60 * 1000).getDate(),
       };
 
     case SET_NEXT_CONTROL_WEEK:
       return {
         ...state,
         diffWeek: state.diffWeek + 1,
-        controlYear: new Date((new Date()).setDate(state.controlDate + (state.diffWeek + 1) * 7)).getFullYear(),
-        controlMonth: new Date((new Date()).setDate(state.controlDate + (state.diffWeek + 1) * 7)).getMonth() + 1,
-        controlDate: new Date((new Date()).setDate(state.controlDate + (state.diffWeek + 1) * 7)).getDate(),
+        controlYear: new Date(new Date().getTime() + (state.diffWeek + 1) * 7 * 24 * 60 * 60 * 1000).getFullYear(),
+        controlMonth: new Date(new Date().getTime() + (state.diffWeek + 1) * 7 * 24 * 60 * 60 * 1000).getMonth() + 1,
+        controlDate: new Date(new Date().getTime() + (state.diffWeek + 1) * 7 * 24 * 60 * 60 * 1000).getDate(),
       };
 
     default:

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { styles } from "./styles";
 import classnames from 'classnames'
 import { withStyles } from "@material-ui/core/styles/index";
-import { Card, Fab } from '@material-ui/core';
+import { Card } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { convertTime, openDialog } from '../../actions/RequestManager';
 

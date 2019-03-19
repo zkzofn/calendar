@@ -24,8 +24,8 @@ import MonthCard from '../../components/MonthCard'
 import Alert from '../../components/Alert';
 
 class CalendarMonth extends Component {
-  handleTile(startYear, startMonth, startDate, that, timeDiff = 1) {
-    // 현재 시간 기준으로 1시간(timeDiff) 짜리 일정을 셋팅해서 dialog 를 띄운다.
+  handleTile(startYear, startMonth, startDate) {
+    const timeDiff = 1;
     const now = new Date();
     const startTime = new Date(startYear, startMonth - 1, now.getHours() === 23 ? startDate - 1 : startDate, now.getHours() + 1);
     const endTime = new Date(startYear, startMonth - 1, now.getHours() === 23 ? startDate - 1 : startDate, now.getHours() + 1 + timeDiff);

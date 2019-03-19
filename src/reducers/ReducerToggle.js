@@ -1,7 +1,7 @@
 import { SELECT_MONTH_WEEK } from '../actions/RequestManager';
 
 const INITIAL_STATE = {
-  monthWeek: false
+  monthWeek: true
 };
 
 export default function (state = INITIAL_STATE, action) {

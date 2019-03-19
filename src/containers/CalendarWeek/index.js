@@ -21,11 +21,27 @@ import {
 } from '../../actions/RequestManager'
 import { errorMessage } from '../../actions/constants'
 import CustomDialog from '../../components/CustomDialog';
-import MonthCard from '../../components/MonthCard'
 import Alert from '../../components/Alert';
 
 
 class CalendarWeek extends Component {
+  clickGrid(date, schedule = null) {
+    console.log(schedule);
+    // const startYear = date.getFullYear();
+    // const startMonth = date.getMonth() + 1;
+    // const startDate = date.getDate();
+    const startTime = date;
+    const endTime = date.getTime() + 1000 * 60 * 60;
+    // const startTime = new Date(startYear, startMonth - 1, now.getHours() === 23 ? startDate - 1 : startDate, now.getHours() + 1);
+    // const endTime = new Date(startYear, startMonth - 1, now.getHours() === 23 ? startDate - 1 : startDate, now.getHours() + 1 + timeDiff);
+
+    if (!!schedule) {
+      this.props.openDialog(schedule.startTime, schedule.endTime, schedule.title)
+    } else {
+      this.props.openDialog(startTime, endTime, null);
+    }
+  }
+
   onDragStart = (event, schedule, id) => {
     event.dataTransfer.setData('schedule', JSON.stringify(schedule));
   }
@@ -47,12 +63,10 @@ class CalendarWeek extends Component {
     const endTime = new Date(targetYear, targetMonth, targetDate, targetStartHours + diffHours);
 
     if (checkSchedule(startTime, endTime, originSchedule)) {
-      console.log(true)
       this.props.deleteSchedule(originSchedule);
       this.props.saveSchedule(originSchedule.title, startTime, endTime);
       this.props.closeAlert();
     } else {
-      console.log(false);
       this.props.setALertErrorMessage(errorMessage.duplicatedSchedule);
       this.props.openAlert();
     }
@@ -63,7 +77,6 @@ class CalendarWeek extends Component {
     const { controlYear, controlMonth, controlDate } = this.props.date;
     const firstDay = (new Date(controlYear, controlMonth - 1, controlDate)).getDay();
     const firstDate = new Date(controlYear, controlMonth - 1, controlDate - firstDay);
-    const lastDate = new Date(controlYear, controlMonth - 1, controlDate - firstDay + 6);
     const days = [null, '일', '월', '화', '수', '목', '금', '토']
 
     return (
@@ -130,8 +143,10 @@ class CalendarWeek extends Component {
                     index < 8 ? classes.gridTileTop : null,
                     index % 8 === 0 ? classes.gridTileLeft : null,
                     targetSchedule ? classes.gridTarget : null,
+                    targetSchedule && (new Date(new Date(targetSchedule.endTime).getTime() - 1000 * 60 * 60).getTime() === date.getTime()) ? classes.gridTargetLast : null,
                   )}
-                  draggable
+                  onClick={this.clickGrid.bind(this, date, targetSchedule)}
+                  draggable={!!targetSchedule}
                   onDragStart={event => this.onDragStart(event, targetSchedule)}
                   onDragOver={this.onDragOver}
                   onDrop={event => this.onDrop(event, date)}
@@ -153,6 +168,8 @@ class CalendarWeek extends Component {
             }
           })}
         </GridList>
+        <CustomDialog />
+        <Alert />
       </div>
     )
   }
