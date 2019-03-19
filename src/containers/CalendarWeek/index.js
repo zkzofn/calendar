@@ -28,7 +28,10 @@ import Alert from '../../components/Alert';
 class CalendarWeek extends Component {
   render() {
     const { classes } = this.props;
-
+    const { controlYear, controlMonth, controlDate } = this.props.date;
+    const firstDay = (new Date(controlYear, controlMonth - 1, controlDate)).getDay();
+    const firstDate = new Date(controlYear, controlMonth - 1, controlDate - firstDay);
+    const lastDate = new Date(controlYear, controlMonth - 1, controlDate - firstDay + 6);
     const days = [null, '일', '월', '화', '수', '목', '금', '토']
 
     return (
@@ -41,6 +44,9 @@ class CalendarWeek extends Component {
         >
           {days.map((day, index) => {
             if (day !== null) {
+              const dateMilli = firstDate.getTime() + 1000 * 60 * 60 * 24 * (index - 1);
+              const date = new Date(dateMilli);
+
               return (
                 <GridListTile
                   key={index}
@@ -49,7 +55,7 @@ class CalendarWeek extends Component {
                   )}
                 >
                   <Typography className={classes.headLine}>{day}</Typography>
-                  <Typography variant="h4" className={classes.headLine}>{index}</Typography>
+                  <Typography variant="h4" className={classes.headLine}>{date.getDate()}</Typography>
                 </GridListTile>
               )
             } else {

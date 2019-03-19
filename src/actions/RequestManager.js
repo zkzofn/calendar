@@ -1,8 +1,11 @@
 import { DATATYPE } from './constants';
 
 export const GET_NOW = 'GET_NOW';
+export const SET_NOW = 'SET_NOW';
 export const SET_PREV_CONTROL_MONTH = 'SET_PREV_CONTROL_MONTH';
 export const SET_NEXT_CONTROL_MONTH = 'SET_NEXT_CONTROL_MONTH';
+export const SET_PREV_CONTROL_WEEK = 'SET_PREV_CONTROL_WEEK';
+export const SET_NEXT_CONTROL_WEEK = 'SET_NEXT_CONTROL_WEEK';
 export const SELECT_MONTH_WEEK = 'TOGGLE_MONTH_WEEK';
 export const SAVE_SCHEDULE = 'SAVE_SCHEDULE';
 export const CHECK_SCHEDULE = 'CHECK_SCHEDULE';
@@ -24,6 +27,12 @@ export function getNow() {
   };
 }
 
+export function setNow() {
+  return {
+    type: SET_NOW,
+  }
+}
+
 export function setPrevControlMonth() {
   return {
     type: SET_PREV_CONTROL_MONTH,
@@ -33,6 +42,18 @@ export function setPrevControlMonth() {
 export function setNextControlMonth() {
   return {
     type: SET_NEXT_CONTROL_MONTH,
+  }
+}
+
+export function setPrevControlWeek() {
+  return {
+    type: SET_PREV_CONTROL_WEEK,
+  }
+}
+
+export function setNextControlWeek() {
+  return {
+    type: SET_NEXT_CONTROL_WEEK,
   }
 }
 

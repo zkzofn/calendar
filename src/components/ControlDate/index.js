@@ -6,17 +6,33 @@ import { styles } from './styles';
 import { withStyles } from '@material-ui/core/styles';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons'
 import { IconButton } from '@material-ui/core'
-import { getNow, setPrevControlMonth, setNextControlMonth } from '../../actions/RequestManager';
+import {
+  getNow,
+  setPrevControlMonth,
+  setNextControlMonth,
+  setPrevControlWeek,
+  setNextControlWeek,
+} from '../../actions/RequestManager';
 
 
 
 class ControlDate extends Component {
   setPrevControlMonth() {
-    this.props.setPrevControlMonth();
+    if (this.props.toggle) {
+      this.props.setPrevControlMonth();
+    } else {
+      this.props.setPrevControlWeek();
+    }
+
+
   }
 
   setNextControlMonth() {
-    this.props.setNextControlMonth();
+    if (this.props.toggle) {
+      this.props.setNextControlMonth();
+    } else {
+      this.props.setNextControlWeek();
+    }
   }
 
   render() {
@@ -43,7 +59,8 @@ ControlDate.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    date: state.date
+    date: state.date,
+    toggle: state.toggle.monthWeek,
   };
 }
 
@@ -51,7 +68,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getNow,
     setPrevControlMonth,
-    setNextControlMonth
+    setNextControlMonth,
+    setPrevControlWeek,
+    setNextControlWeek,
   }, dispatch);
 }
 
