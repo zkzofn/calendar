@@ -18,7 +18,7 @@ npm run build
 npm install -g serve
 ```
 
-## Howto start from build
+## How to start from build
 ```bash
 serve -s build -l 3000
 ```
