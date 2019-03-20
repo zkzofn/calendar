@@ -138,7 +138,10 @@ export function checkSchedule(startTime, endTime, originSchedule) {
     }
 
     return data.filter(schedule => {
-      return (new Date(schedule.startTime) <= startTime && startTime < new Date(schedule.endTime)) || (new Date(schedule.startTime) < endTime && endTime <= new Date(schedule.endTime))
+      return ((new Date(schedule.startTime) <= startTime && startTime < new Date(schedule.endTime))
+        || (new Date(schedule.startTime) < endTime && endTime <= new Date(schedule.endTime)))
+        || ((startTime <= new Date(schedule.startTime) && new Date(schedule.startTime) < endTime)
+        || (startTime < new Date(schedule.endTime) && new Date(schedule.endTime) <= endTime))
     }).length === 0;
   }
 }
