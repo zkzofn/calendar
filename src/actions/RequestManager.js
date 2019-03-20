@@ -127,6 +127,7 @@ export function saveSchedule(title, startTime, endTime) {
 export function checkSchedule(startTime, endTime, originSchedule) {
   let data = JSON.parse(localStorage.getItem(DATATYPE.SCHEDULE));
 
+
   if (data === null) {
     return true;
   } else {
@@ -137,7 +138,7 @@ export function checkSchedule(startTime, endTime, originSchedule) {
     }
 
     return data.filter(schedule => {
-      return !(new Date(schedule.startTime) >= endTime || new Date(schedule.endTime) <= startTime)
+      return (new Date(schedule.startTime) <= startTime && startTime < new Date(schedule.endTime)) || (new Date(schedule.startTime) < endTime && endTime <= new Date(schedule.endTime))
     }).length === 0;
   }
 }
