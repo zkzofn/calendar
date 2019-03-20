@@ -1,15 +1,30 @@
+## 결과 확인
+https://calendar-kakao.netlify.com/ 에서 확인 가능합니다.
+
+
 ## How to install
 ```bash
 npm install
 ```
 
-## How to start
+## How to start on dev-server
 ```bash
 npm start
 ```
 
+## How to build
+```bash
+npm run build
+npm install -g serve
+```
+
+## Howto start from build
+```bash
+serve -s build -l 3000
+```
+
 #### 페이지 확인
-위 `npm start` 명령어로 프로젝트 실행 후, 
+위 `npm start` or 빌드 후 `serve -s build -l 3000`명령어로 프로젝트 실행 후, 
 http://localhost:3000 에서 페이지 확인 가능
 
 ## 문제 해결 전략
