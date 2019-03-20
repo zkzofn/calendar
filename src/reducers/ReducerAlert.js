@@ -12,10 +12,7 @@ const INITIAL_STATE = {
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case OPEN_ALERT:
-      return {
-        ...state,
-        open: true,
-      };
+      return { ...state, open: true };
 
     case CLOSE_ALERT:
       return { ...state, open: false, errorMessage: null };

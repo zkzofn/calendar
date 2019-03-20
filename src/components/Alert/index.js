@@ -7,8 +7,6 @@ import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, B
 import { withStyles } from "@material-ui/core/styles/index";
 import { openAlert, closeAlert, setALertErrorMessage } from '../../actions/RequestManager';
 
-
-
 class Alert extends Component {
   handleClose = () => {
     this.props.closeAlert();

@@ -32,8 +32,6 @@ import {
   deleteSchedule,
 } from '../../actions/RequestManager'
 
-
-
 class CustomDialog extends Component {
   constructor(props) {
     super(props);
@@ -126,7 +124,7 @@ class CustomDialog extends Component {
 
   handleSave = () => {
     const { title, startTime, endTime } = this.props.dialog;
-    
+
     if (checkSchedule(startTime, endTime, this.originSchedule)) {
       if (this.originSchedule.title !== null) {
         this.props.deleteSchedule(this.originSchedule);

@@ -14,8 +14,6 @@ import {
   setNextControlWeek,
 } from '../../actions/RequestManager';
 
-
-
 class ControlDate extends Component {
   setPrevControlMonth() {
     if (this.props.toggle) {

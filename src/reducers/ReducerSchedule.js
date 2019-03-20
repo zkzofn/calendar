@@ -2,7 +2,6 @@ import {
   SAVE_SCHEDULE,
   DELETE_SCHEDULE,
 } from '../actions/RequestManager'
-
 import { DATATYPE } from '../actions/constants'
 
 const schedules = JSON.parse(localStorage.getItem(DATATYPE.SCHEDULE));
@@ -14,8 +13,10 @@ export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case SAVE_SCHEDULE:
       return { ...state, data: action.payload };
+
     case DELETE_SCHEDULE:
       return { ...state, data: action.payload };
+
     default:
       return state;
   }

@@ -26,14 +26,8 @@ import Alert from '../../components/Alert';
 
 class CalendarWeek extends Component {
   clickGrid(date, schedule = null) {
-    console.log(schedule);
-    // const startYear = date.getFullYear();
-    // const startMonth = date.getMonth() + 1;
-    // const startDate = date.getDate();
     const startTime = date;
-    const endTime = date.getTime() + 1000 * 60 * 60;
-    // const startTime = new Date(startYear, startMonth - 1, now.getHours() === 23 ? startDate - 1 : startDate, now.getHours() + 1);
-    // const endTime = new Date(startYear, startMonth - 1, now.getHours() === 23 ? startDate - 1 : startDate, now.getHours() + 1 + timeDiff);
+    const endTime = new Date(date.getTime() + 1000 * 60 * 60);
 
     if (!!schedule) {
       this.props.openDialog(schedule.startTime, schedule.endTime, schedule.title)
@@ -42,7 +36,7 @@ class CalendarWeek extends Component {
     }
   }
 
-  onDragStart = (event, schedule, id) => {
+  onDragStart = (event, schedule) => {
     event.dataTransfer.setData('schedule', JSON.stringify(schedule));
   }
 
@@ -162,7 +156,7 @@ class CalendarWeek extends Component {
 
               return (
                 <GridListTile key={index} className={classes.gridTile}>
-                  <Typography className={classnames(classes.divider)}>{`${divider} ${dividedHours}시`}</Typography>
+                  <Typography className={classes.divider}>{`${divider} ${dividedHours}시`}</Typography>
                 </GridListTile>
               )
             }
